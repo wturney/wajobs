@@ -1,0 +1,5 @@
+<FindBugsFilter>
+	<Match>
+		<Class name="~.*\.builder\..*Builder$" />
+	</Match>
+</FindBugsFilter>
