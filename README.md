@@ -18,8 +18,11 @@ The code is divided into the following groups
 
 HTTP Client
 ===
-An AngularJS client example is [available here](https://wajobs.hightower-software.com/client/postings).
+An AngularJS client demo is [available here](https://wajobs.hightower-software.com/client/postings).
 
+| Username | Password |
+| ---- | --------------- |
+| spider | man |
 
 REST API
 ===
@@ -29,14 +32,6 @@ REST API
 | Endpoint | Description |
 | ---- | --------------- |
 | [GET /jurisdictions](https://wajobs.hightower-software.com/jurisdictions) | Get a list of jurisdictions. |
-
-Jurisdiction endpoints require authorization
-
-| Username | Password |
-| ---- | --------------- |
-| spider | man |
-
-
 
 ### Postings
 
