@@ -1,0 +1,22 @@
+<table class="pure-table pure-table-horizontal">
+  <thead>
+    <tr>
+      <th>Position</th>
+      <th class="date">Open Date</th>
+      <th class="date">Close Date</th>
+      <th class="employmentType">Type</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr ng-repeat="posting in postings">
+      <td>
+        <a href="{{posting.url}}">{{posting.title}}</a>
+        <br/>
+        <span class="jurisdiction">{{posting.jurisdiction | jurisdiction : jurisdictions}}</span>
+      </td>
+      <td class="date">{{posting.openDate | longDate}}</td>
+      <td class="date">{{posting.closeDate | longDate | closeDate : '&mdash;'}}</td>
+      <td class="employmentType">{{posting.employmentType | employmentType}}</td>
+    </tr>
+  </tbody>
+</table>

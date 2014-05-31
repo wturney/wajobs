@@ -9,22 +9,26 @@ A quick project evaluating Spring, Jackson, JPA and Hibernate. Particularly focu
 
 The goal was to provide the foundations of a REST service for aggregating job postings from the various jurisdictions throughout Washington. It should be noted that the resulting project is very over-engineered given its limited scope. This was done intentionally in an effort to simulate a more realistic EE architecture.
 
-The architecture is divided into four layers:
+The code is divided into the following groups
 
-* Controllers <code>com.wtl.wawork.rest.*</code>
+* REST API <code>com.wtl.wawork.rest.*</code>
+* HTTP Client <code>com.wtl.wawork.web.*</code>
 * Services <code>com.wtl.wawork.core.service.*</code>
 * Repositories <code>com.wtl.wawork.core.persistence.*</code>
-* EntityManager
+
+HTTP Client
+===
+An AngularJS client example is [available here](https://wajobs.hightower-software.com/client/postings).
 
 
-Sample Deployment
+REST API
 ===
 
 ### Jurisdictions
 
 | Endpoint | Description |
 | ---- | --------------- |
-| [GET /jurisdictions/](https://wajobs.hightower-software.com/jurisdictions) | Get a list of jurisdictions. |
+| [GET /jurisdictions](https://wajobs.hightower-software.com/jurisdictions) | Get a list of jurisdictions. |
 
 Jurisdiction endpoints require authorization
 
@@ -38,9 +42,9 @@ Jurisdiction endpoints require authorization
 
 | Endpoint | Description |
 | ---- | --------------- |
-| [GET /postings/](https://wajobs.hightower-software.com/postings) | Get a list of postings. Accepts filtering parameters. |
+| [GET /postings](https://wajobs.hightower-software.com/postings) | Get a list of postings |
 
-#### Parameters
+#### Posting Filter Parameters
 
 <table>
     <thead>

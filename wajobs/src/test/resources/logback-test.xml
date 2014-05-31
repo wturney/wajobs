@@ -29,7 +29,7 @@
 		<appender-ref ref="consoleAppender" />
 	</logger>
 
-	<logger name="com.wtl.wawork" level="WARN" additivity="false">
+	<logger name="com.wtl.wawork" level="DEBUG" additivity="false">
 		<appender-ref ref="consoleAppender" />
 	</logger>
 

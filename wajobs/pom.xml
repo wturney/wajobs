@@ -1,8 +1,8 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-	<groupId>WaJobs</groupId>
-	<artifactId>WaJobs</artifactId>
+	<groupId>WaWork</groupId>
+	<artifactId>WaWork</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 
 	<packaging>war</packaging>
@@ -19,9 +19,12 @@
 		<spring.version>4.0.4.RELEASE</spring.version>
 		<jackson.version>2.4.0-rc3</jackson.version>
 		<springsecurity.version>3.2.3.RELEASE</springsecurity.version>
+		<project.webapp.directory>${project.basedir}/src/main/web</project.webapp.directory>
+		<project.build.webapp.directory>${project.build.directory}/generated-resources</project.build.webapp.directory>
 	</properties>
 
 	<build>
+
 		<directory>target</directory>
 		<sourceDirectory>src/main/java</sourceDirectory>
 		<outputDirectory>target/classes</outputDirectory>
@@ -29,6 +32,7 @@
 		<testOutputDirectory>target/test-classes</testOutputDirectory>
 
 		<finalName>${project.artifactId}-${project.version}</finalName>
+
 		<resources>
 			<resource>
 				<directory>src/main/resources</directory>
@@ -39,7 +43,43 @@
 				<directory>src/test/resources</directory>
 			</testResource>
 		</testResources>
+
+		<pluginManagement>
+			<plugins>
+				<plugin>
+					<groupId>org.eclipse.m2e</groupId>
+					<artifactId>lifecycle-mapping</artifactId>
+					<version>1.0.0</version>
+					<configuration>
+						<lifecycleMappingMetadata>
+							<pluginExecutions>
+								<pluginExecution>
+									<!-- We need to add this so that m2e (maven2eclipse) will execute 
+										the minify-maven-plugin's goal 'minify' when it builds the eclipse project -->
+									<pluginExecutionFilter>
+										<groupId>com.samaxes.maven</groupId>
+										<artifactId>minify-maven-plugin</artifactId>
+										<versionRange>[1.0.0,)</versionRange>
+										<goals>
+											<goal>minify</goal>
+										</goals>
+									</pluginExecutionFilter>
+									<action>
+										<execute>
+											<runOnIncremental>true</runOnIncremental>
+										</execute>
+									</action>
+								</pluginExecution>
+							</pluginExecutions>
+						</lifecycleMappingMetadata>
+					</configuration>
+				</plugin>
+			</plugins>
+		</pluginManagement>
+
 		<plugins>
+
+
 			<plugin>
 				<artifactId>maven-compiler-plugin</artifactId>
 				<version>3.1</version>
@@ -48,6 +88,25 @@
 					<target>1.7</target>
 				</configuration>
 			</plugin>
+
+			<plugin>
+				<groupId>org.lesscss</groupId>
+				<artifactId>lesscss-maven-plugin</artifactId>
+				<version>1.7.0.1.0</version>
+				<configuration>
+					<sourceDirectory>${project.webapp.directory}/less</sourceDirectory>
+					<outputDirectory>${project.webapp.directory}/css</outputDirectory>
+					<compress>true</compress>
+				</configuration>
+				<executions>
+					<execution>
+						<goals>
+							<goal>compile</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-surefire-plugin</artifactId>
@@ -56,6 +115,7 @@
 					<excludedGroups>com.wtl.wawork.core.util.FunctionalTest</excludedGroups>
 				</configuration>
 			</plugin>
+
 			<plugin>
 				<artifactId>maven-war-plugin</artifactId>
 				<version>2.4</version>
@@ -63,8 +123,55 @@
 					<webappDirectory>target/deploy</webappDirectory>
 					<failOnMissingWebXml>false</failOnMissingWebXml>
 					<warSourceExcludes>**/test/*</warSourceExcludes>
+					<webResources>
+						<resource>
+							<directory>${project.webapp.directory}</directory>
+							<includes>
+								<include>**/*.html</include>
+								<include>**/vendor/*.js</include>
+							</includes>
+							<targetPath>resources</targetPath>
+						</resource>
+						<resource>
+							<directory>${project.build.webapp.directory}</directory>
+							<targetPath>resources</targetPath>
+						</resource>
+					</webResources>
 				</configuration>
 			</plugin>
+
+			<plugin>
+				<groupId>com.samaxes.maven</groupId>
+				<artifactId>minify-maven-plugin</artifactId>
+				<version>1.7.2</version>
+				<executions>
+					<execution>
+						<goals>
+							<goal>minify</goal>
+						</goals>
+					</execution>
+				</executions>
+				<configuration>
+					<webappTargetDir>${project.build.webapp.directory}</webappTargetDir>
+					<webappSourceDir>${project.webapp.directory}</webappSourceDir>
+					<jsTargetDir>/js</jsTargetDir>
+					<jsSourceDir>/js</jsSourceDir>
+					<cssSourceDir>/css</cssSourceDir>
+					<cssSourceIncludes>
+						<cssSourceInclude>**/*.css</cssSourceInclude>
+					</cssSourceIncludes>
+					<jsSourceIncludes>
+						<jsSourceInclude>**/*.js</jsSourceInclude>
+					</jsSourceIncludes>
+					<jsSourceExcludes>
+						<jsSourceExclude>vendor/**</jsSourceExclude>
+					</jsSourceExcludes>
+					<jsEngine>CLOSURE</jsEngine>
+					<jsFinalFile>wawork.js</jsFinalFile>
+					<cssFinalFile>wawork.css</cssFinalFile>
+				</configuration>
+			</plugin>
+
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-install-plugin</artifactId>

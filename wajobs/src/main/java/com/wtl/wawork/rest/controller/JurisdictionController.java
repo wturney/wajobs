@@ -21,6 +21,8 @@ import com.wtl.wawork.rest.view.Jurisdiction;
 /**
  * Controller representing jurisdiction resources and their available operations
  * 
+ * TODO: Apply versioning & vendor content type
+ * 
  * @author Weston Turney-Loos
  * 
  */

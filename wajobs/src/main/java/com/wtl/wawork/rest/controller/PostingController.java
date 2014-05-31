@@ -29,6 +29,8 @@ import com.wtl.wawork.rest.view.Posting;
 /**
  * Controller representing posting resources and their various operations
  * 
+ * TODO: Apply versioning & vendor content type
+ * 
  * @author Weston Turney-Loos
  * 
  */
