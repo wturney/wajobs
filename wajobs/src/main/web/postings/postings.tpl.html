@@ -14,8 +14,8 @@
         <br/>
         <span class="jurisdiction">{{posting.jurisdiction | jurisdiction : jurisdictions}}</span>
       </td>
-      <td class="date">{{posting.openDate | longDate}}</td>
-      <td class="date">{{posting.closeDate | longDate | closeDate : '&mdash;'}}</td>
+      <td class="date">{{posting.openDate | epochDate }}</td>
+      <td class="date">{{posting.closeDate | epochDate : '&mdash;'}}</td>
       <td class="employmentType">{{posting.employmentType | employmentType}}</td>
     </tr>
   </tbody>

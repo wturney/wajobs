@@ -141,6 +141,37 @@
 			</plugin>
 
 			<plugin>
+				<groupId>com.github.searls</groupId>
+				<artifactId>jasmine-maven-plugin</artifactId>
+				<version>1.3.1.5</version>
+				<executions>
+					<execution>
+						<goals>
+							<goal>test</goal>
+						</goals>
+					</execution>
+				</executions>
+				<configuration>
+					<jsSrcDir>${project.webapp.directory}/js</jsSrcDir>
+					<jsTestSrcDir>${project.webapp.directory}/js</jsTestSrcDir>
+					<preloadSources>
+						<source>vendor/jquery.js</source>
+						<source>vendor/angular.js</source>
+						<source>vendor/angular-mocks.js</source>
+						<source>vendor/angular-route.js</source>
+						<source>vendor/angular-resource.js</source>
+						<source>vendor/moment.min.js</source>
+					</preloadSources>
+					<sourceExcludes>
+						<exclude>**/*.spec.js</exclude>
+					</sourceExcludes>
+					<specIncludes>
+						<include>**/*.spec.js</include>
+					</specIncludes>
+				</configuration>
+			</plugin>
+
+			<plugin>
 				<groupId>com.samaxes.maven</groupId>
 				<artifactId>minify-maven-plugin</artifactId>
 				<version>1.7.2</version>
@@ -165,6 +196,7 @@
 					</jsSourceIncludes>
 					<jsSourceExcludes>
 						<jsSourceExclude>vendor/**</jsSourceExclude>
+						<jsSourceExclude>**/*.spec.js</jsSourceExclude>
 					</jsSourceExcludes>
 					<jsEngine>CLOSURE</jsEngine>
 					<jsFinalFile>wawork.js</jsFinalFile>

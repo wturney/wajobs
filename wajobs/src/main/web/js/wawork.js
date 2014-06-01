@@ -13,6 +13,6 @@ angular.module('wawork', [
   });
 });
 
-function WaworkCtrl($scope, $route, $routeParams, $location) {
+function WaworkCtrl($scope) {
 
 }

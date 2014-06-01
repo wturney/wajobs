@@ -1,3 +1,5 @@
+var employmentTypes = ['N/A', 'Full Time', 'Part Time', 'Seasonal', 'Temporary', 'Internship', 'On Call'];
+
 angular.module('wawork.postings', [
   'ngRoute',
   'wawork.postings.service',
@@ -7,7 +9,7 @@ angular.module('wawork.postings', [
 .config(function($routeProvider) {
   $routeProvider
     .when('/postings', {
-      controller: PostingsCtrl,
+      controller: 'PostingsCtrl',
       templateUrl: 'postings/postings.tpl.html',
       resolve: {
         jurisdictions: function(Jurisdictions) {
@@ -19,45 +21,45 @@ angular.module('wawork.postings', [
               }
               return idMap;
             });
+        },
+        postings: function(Postings) {
+          return Postings.query()
+            .$promise.then(function(data) {
+              return data;
+            });
         }
       }
     });
 })
 
 .filter('employmentType', function() {
-  var employmentTypes = ['N/A', 'Full Time', 'Part Time', 'Seasonal', 'Temporary', 'Internship', 'On Call'];
-
-  return function(id) {
-    return employmentTypes[id];
+  return function(id, placeholder) {
+    return employmentTypes[id] ? employmentTypes[id] : placeholder;
   };
 })
 
 .filter('jurisdiction', function() {
-  return function(id, jurisdictions) {
-    return jurisdictions[id];
+  return function(id, idNameMap, placeholder) {
+    return idNameMap[id] ? idNameMap[id] : placeholder;
   };
 })
 
-.filter('longDate', function() {
-  return function(input) {
+.filter('epochDate', function() {
+  return function(input, placeholder) {
+    var result = placeholder;
+
     if (input) {
       var epoch = parseInt(input);
       if (!isNaN(epoch)) {
         var date = moment(epoch);
-        return date.format('MMM D');
+        result = date.format('MMM D');
       }
     }
-    return null;
+    return result;
   };
 })
 
-.filter('closeDate', function() {
-  return function(input, alternative) {
-    return input ? input : alternative;
-  };
-});
-
-function PostingsCtrl($scope, $routeParams, Postings, jurisdictions) {
-  $scope.postings = Postings.query();
+function PostingsCtrl($scope, $routeParams, postings, jurisdictions) {
+  $scope.postings = postings;
   $scope.jurisdictions = jurisdictions;
 }
